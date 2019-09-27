@@ -1,0 +1,13 @@
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\bin\Debug\quanLyQuanCafeFinal.exe.config
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\bin\Debug\quanLyQuanCafeFinal.exe
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\bin\Debug\quanLyQuanCafeFinal.pdb
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.csprojAssemblyReference.cache
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.frmLogIn.resources
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.Properties.Resources.resources
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.csproj.GenerateResource.cache
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.csproj.CoreCompileInputs.cache
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.exe
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.pdb
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.frmTableManager.resources
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.frmAccountProfile.resources
+C:\Users\btbno\Desktop\.NET code\quanLyQuanCafeFinalProject!\quanLyQuanCafeFinal\quanLyQuanCafeFinal\obj\Debug\quanLyQuanCafeFinal.frmAdmin.resources
