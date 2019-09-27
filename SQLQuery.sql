@@ -1,0 +1,4 @@
+create database quanLyQuanCafeProject
+go
+use quanLyQuanCafeProject 
+go
