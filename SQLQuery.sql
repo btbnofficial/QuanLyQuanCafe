@@ -59,3 +59,47 @@ create table billInfo
 
 )
 go
+
+insert into dbo.account
+(
+	username ,
+	displayName ,
+	password ,
+	type 
+)
+values
+(
+	N'btbn',
+	N'btbn_csgo',
+	N'1',
+	1
+)
+
+
+insert into dbo.account
+(
+	username ,
+	displayName ,
+	password ,
+	type 
+)
+values
+(
+	N'staff',
+	N'Nhan Vien 01',
+	N'1',
+	0
+)
+
+select * from dbo.account
+go
+
+create proc usp_getAccountByUserName
+@username nvarchar(100)
+as
+begin
+	select * from dbo.account where username = @username
+end
+go
+
+exec dbo.usp_getAccountByUserName @username = N'btbn'
