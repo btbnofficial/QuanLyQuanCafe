@@ -1,4 +1,5 @@
-﻿using System;
+﻿using quanLyQuanCafeFinal.DAO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,10 +25,24 @@ namespace quanLyQuanCafeFinal
 
         private void BtnLogIn_Click(object sender, EventArgs e)
         {
-            frmTableManager f = new frmTableManager();
-            this.Hide();
-            f.ShowDialog();     //show dialog là top mode, chỉ thực hiện được các thao tác trên form đó
-            this.Show();
+            String username = txtUserName.Text;
+            String password = txtPassword.Text;
+            if(logIn(username,password))
+            {
+                frmTableManager f = new frmTableManager();
+                this.Hide();
+                f.ShowDialog();     //show dialog là top mode, chỉ thực hiện được các thao tác trên form đó
+                this.Show();
+            }
+            else
+            {
+                MessageBox.Show("Sai tên tài khoản hoặc mật khẩu!", "Thông báo!");
+            }
+        }
+
+        bool logIn(String username, String password)
+        {
+            return AccountDAO.Instance.logIn(username, password);
         }
 
         private void FrmLogIn_FormClosing(object sender, FormClosingEventArgs e)

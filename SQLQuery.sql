@@ -103,3 +103,5 @@ end
 go
 
 exec dbo.usp_getAccountByUserName @username = N'btbn'
+
+select * from dbo.account where username = N'btbn' and password = N'1'
