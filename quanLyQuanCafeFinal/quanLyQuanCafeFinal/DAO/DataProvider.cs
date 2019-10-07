@@ -10,6 +10,25 @@ namespace quanLyQuanCafeFinal.DAO
 {
     public class DataProvider
     {
+        private static DataProvider instance;
+
+        /// <summary>
+        /// Kiến trúc Singleton, để cho chỉ tồn tại duy nhất 1 đối tượng Dataprovider trong chương trinh
+        /// </summary>
+        public static DataProvider Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new DataProvider();
+                }
+                return instance;
+            }
+            private set => instance = value;    //Chỉ nội bộ trong lớp này mới được set dữ liệu cho instance còn bên ngoài thì k
+        }
+
+
         private String connectionString = @"Data Source=(LocalDB)\LocalDBDemo;Initial Catalog=quanLyQuanCafeProject;Integrated Security=True";
 
         /// <summary>
