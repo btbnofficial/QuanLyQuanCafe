@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Menu = quanLyQuanCafeFinal.DTO.Menu;
 
 namespace quanLyQuanCafeFinal
 {
@@ -29,8 +30,11 @@ namespace quanLyQuanCafeFinal
 
             foreach(Table table in tablelst)
             {
-                Button btn = new Button();// { Width = TableDAO.tableWidth, Height = TableDAO.tableHeight};
+                Button btn = new Button() { Width = TableDAO.tableWidth, Height = TableDAO.tableHeight};
                 btn.Text = table.Name + Environment.NewLine + table.Status;
+                btn.Click += btn_Click;
+                btn.Tag = table;
+
                 if(table.Status=="Trống")
                 {
                     btn.BackColor = Color.Gray;
@@ -43,11 +47,34 @@ namespace quanLyQuanCafeFinal
                 flpTable.Controls.Add(btn);
             }
         }
+
+        void ShowBill(int id)
+        {
+            lsvBill.Items.Clear();
+            List<DTO.Menu> lstMenu = MenuDAO.Instance.getListMenuByTable(id);
+
+            foreach(Menu item in lstMenu)
+            {
+                ListViewItem lstvItem = new ListViewItem(item.FoodName.ToString());
+                lstvItem.SubItems.Add(item.Count.ToString());
+                lstvItem.SubItems.Add(item.Price.ToString());
+                lstvItem.SubItems.Add(item.TotalPrice.ToString());
+
+                lsvBill.Items.Add(lstvItem);
+            }
+        }
         #endregion
 
 
 
         #region events
+
+        private void btn_Click(object sender, EventArgs e)
+        {
+            int tableId = ((sender as Button).Tag as Table).ID;
+            ShowBill(tableId);
+        }
+
         private void ĐăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();

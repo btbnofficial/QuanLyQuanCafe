@@ -147,17 +147,82 @@ go
 exec usp_GetTableList
 
 update dbo.tableFood set status = N'Có khách' where id = 5
+--Bai 9: hien thi hoa don
+select * from bill
+select * from billInfo
+select * from food
+select * from foodCategory
 
+--them danh muc
+insert 
+foodCategory(Name)
+values(N'Hải Sản')
+insert 
+foodCategory(Name)
+values(N'Đồ Uống')
+insert 
+foodCategory(Name)
+values(N'Đồ Ăn Nhanh')
+insert 
+foodCategory(Name)
+values(N'Thẻ điện thoại')
+insert 
+foodCategory(Name)
+values(N'Khác')
+--them mon an
+insert 
+dbo.food(Name, idCategory, price)
+values(N'Cá Kho làng Vũ Đại', 1, 1200000)
+insert 
+dbo.food(Name, idCategory, price)
+values(N'Đen đá có đường =)))', 2, 15000)
+insert 
+dbo.food(Name, idCategory, price)
+values(N'Hăm bơ gơ', 3, 12000)
+insert 
+dbo.food(Name, idCategory, price)
+values(N'Viettel20', 4, 20000)
+insert 
+dbo.food(Name, idCategory, price)
+values(N'Khă năng code', 5, 999999999999)
 
+--Thêm Bill
+insert dbo.Bill
+(dateCheckIn,dateCheckOut,idTable,status)
+values(getDate(), null, 2, 0)
+insert dbo.Bill
+(dateCheckIn,dateCheckOut,idTable,status)
+values(getDate(), null, 3, 0)
+insert dbo.Bill
+(dateCheckIn,dateCheckOut,idTable,status)
+values(getDate(), null, 4, 0)
+insert dbo.Bill
+(dateCheckIn,dateCheckOut,idTable,status)
+values(getDate(), GETDATE(), 5, 1)
 
+--Thêm BillInfo
+insert dbo.billInfo
+(idBill, idFood, count)
+values
+(1,1,2)
+insert dbo.billInfo
+(idBill, idFood, count)
+values
+(1,3,1)
+insert dbo.billInfo
+(idBill, idFood, count)
+values
+(2,4,3)
+insert dbo.billInfo
+(idBill, idFood, count)
+values
+(1,2,5)
 
+select * from Bill where idTable = 3 and status = 0
 
+select * from Bill
 
+select * from billInfo where idBill = 1
 
-
-
-
-
-
-
-
+select f.Name, bi.count, f.price, f.price * bi.count as totalPrice from billinfo as bi, Bill as b, Food as f 
+where bi.idBill = b.id and bi.idFood = f.id and b.idTable = 3
