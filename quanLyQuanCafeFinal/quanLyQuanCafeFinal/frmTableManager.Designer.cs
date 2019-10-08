@@ -51,6 +51,7 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.txtToalPrice = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -126,6 +127,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.txtToalPrice);
             this.panel3.Controls.Add(this.cboSwitchTable);
             this.panel3.Controls.Add(this.btnSwitchTable);
             this.panel3.Controls.Add(this.nmDiscount);
@@ -139,14 +141,14 @@
             // cboSwitchTable
             // 
             this.cboSwitchTable.FormattingEnabled = true;
-            this.cboSwitchTable.Location = new System.Drawing.Point(67, 28);
+            this.cboSwitchTable.Location = new System.Drawing.Point(18, 28);
             this.cboSwitchTable.Name = "cboSwitchTable";
             this.cboSwitchTable.Size = new System.Drawing.Size(75, 21);
             this.cboSwitchTable.TabIndex = 5;
             // 
             // btnSwitchTable
             // 
-            this.btnSwitchTable.Location = new System.Drawing.Point(67, 3);
+            this.btnSwitchTable.Location = new System.Drawing.Point(18, 3);
             this.btnSwitchTable.Name = "btnSwitchTable";
             this.btnSwitchTable.Size = new System.Drawing.Size(75, 23);
             this.btnSwitchTable.TabIndex = 10;
@@ -155,7 +157,7 @@
             // 
             // nmDiscount
             // 
-            this.nmDiscount.Location = new System.Drawing.Point(160, 29);
+            this.nmDiscount.Location = new System.Drawing.Point(108, 29);
             this.nmDiscount.Name = "nmDiscount";
             this.nmDiscount.Size = new System.Drawing.Size(75, 20);
             this.nmDiscount.TabIndex = 9;
@@ -164,7 +166,7 @@
             // btnCheckOut
             // 
             this.btnCheckOut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnCheckOut.Location = new System.Drawing.Point(252, 14);
+            this.btnCheckOut.Location = new System.Drawing.Point(293, 14);
             this.btnCheckOut.Name = "btnCheckOut";
             this.btnCheckOut.Size = new System.Drawing.Size(75, 23);
             this.btnCheckOut.TabIndex = 8;
@@ -173,7 +175,7 @@
             // 
             // btnDiscount
             // 
-            this.btnDiscount.Location = new System.Drawing.Point(160, 3);
+            this.btnDiscount.Location = new System.Drawing.Point(108, 3);
             this.btnDiscount.Name = "btnDiscount";
             this.btnDiscount.Size = new System.Drawing.Size(75, 23);
             this.btnDiscount.TabIndex = 7;
@@ -244,7 +246,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Tên món";
-            this.columnHeader1.Width = 214;
+            this.columnHeader1.Width = 204;
             // 
             // columnHeader2
             // 
@@ -259,7 +261,18 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Thành tiền";
-            this.columnHeader4.Width = 63;
+            this.columnHeader4.Width = 71;
+            // 
+            // txtToalPrice
+            // 
+            this.txtToalPrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.txtToalPrice.Location = new System.Drawing.Point(189, 16);
+            this.txtToalPrice.Name = "txtToalPrice";
+            this.txtToalPrice.ReadOnly = true;
+            this.txtToalPrice.Size = new System.Drawing.Size(98, 20);
+            this.txtToalPrice.TabIndex = 11;
+            this.txtToalPrice.Text = "0";
+            this.txtToalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmTableManager
             // 
@@ -279,6 +292,7 @@
             this.menuStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmDiscount)).EndInit();
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nmFoodCount)).EndInit();
@@ -311,5 +325,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.TextBox txtToalPrice;
     }
 }

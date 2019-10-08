@@ -199,6 +199,9 @@ values(getDate(), null, 4, 0)
 insert dbo.Bill
 (dateCheckIn,dateCheckOut,idTable,status)
 values(getDate(), GETDATE(), 5, 1)
+insert dbo.Bill
+(dateCheckIn,dateCheckOut,idTable,status)
+values(getDate(), null, 4, 0)
 
 --Thêm BillInfo
 insert dbo.billInfo
@@ -217,6 +220,10 @@ insert dbo.billInfo
 (idBill, idFood, count)
 values
 (1,2,5)
+insert dbo.billInfo
+(idBill, idFood, count)
+values
+(5,2,5)
 
 select * from Bill where idTable = 3 and status = 0
 
@@ -225,4 +232,7 @@ select * from Bill
 select * from billInfo where idBill = 1
 
 select f.Name, bi.count, f.price, f.price * bi.count as totalPrice from billinfo as bi, Bill as b, Food as f 
-where bi.idBill = b.id and bi.idFood = f.id and b.idTable = 3
+where bi.idBill = b.id and bi.idFood = f.id and b.idTable = 5 and b.status = 0
+select * from billInfo 
+select * from bill
+select * from tableFood

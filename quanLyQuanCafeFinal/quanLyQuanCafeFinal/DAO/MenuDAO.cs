@@ -32,7 +32,7 @@ namespace quanLyQuanCafeFinal.DAO
         {
             List<Menu> lstMenu = new List<Menu>();
 
-            String query = "select f.Name, bi.count, f.price, f.price * bi.count as totalPrice from billinfo as bi, Bill as b, Food as f where bi.idBill = b.id and bi.idFood = f.id and b.idTable = "+id;
+            String query = "select f.Name, bi.count, f.price, f.price * bi.count as totalPrice from billinfo as bi, Bill as b, Food as f where bi.idBill = b.id and bi.idFood = f.id and b.idTable = "+id+ "and b.status = 0";
             DataTable data = DataProvider.Instance.ExcecuteQuery(query);
 
             foreach(DataRow item in data.Rows)

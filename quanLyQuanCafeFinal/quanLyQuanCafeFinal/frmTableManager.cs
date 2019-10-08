@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Menu = quanLyQuanCafeFinal.DTO.Menu;
@@ -53,15 +55,21 @@ namespace quanLyQuanCafeFinal
             lsvBill.Items.Clear();
             List<DTO.Menu> lstMenu = MenuDAO.Instance.getListMenuByTable(id);
 
+            float totalPrice = 0;
+
             foreach(Menu item in lstMenu)
             {
                 ListViewItem lstvItem = new ListViewItem(item.FoodName.ToString());
                 lstvItem.SubItems.Add(item.Count.ToString());
                 lstvItem.SubItems.Add(item.Price.ToString());
                 lstvItem.SubItems.Add(item.TotalPrice.ToString());
+                totalPrice += item.TotalPrice;
 
                 lsvBill.Items.Add(lstvItem);
             }
+            CultureInfo culture = new CultureInfo("vi-VN");
+
+            txtToalPrice.Text = totalPrice.ToString("c", culture);//Chữ c là định dạng tiền bạc
         }
         #endregion
 
@@ -73,6 +81,7 @@ namespace quanLyQuanCafeFinal
         {
             int tableId = ((sender as Button).Tag as Table).ID;
             ShowBill(tableId);
+
         }
 
         private void ĐăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
