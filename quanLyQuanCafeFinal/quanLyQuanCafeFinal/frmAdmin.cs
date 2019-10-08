@@ -17,8 +17,6 @@ namespace quanLyQuanCafeFinal
         public frmAdmin()
         {
             InitializeComponent();
-          
         }
-
     }
 }

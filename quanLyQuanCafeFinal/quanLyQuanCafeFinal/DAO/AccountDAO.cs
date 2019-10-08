@@ -32,8 +32,8 @@ namespace quanLyQuanCafeFinal.DAO
 
         public bool logIn(String username, String password)
         {
-            String query = "select * from dbo.account where username = N'"+ username+"' and password = N'"+password+"'";
-            DataTable result = DataProvider.Instance.ExcecuteQuery(query);
+            String query = "usp_logIn @username , @password";
+            DataTable result = DataProvider.Instance.ExcecuteQuery(query,new object[] {username, password });
             return result.Rows.Count > 0;
         }
     }
