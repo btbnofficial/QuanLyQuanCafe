@@ -35,7 +35,12 @@
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lsvBill = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
+            this.txtToalPrice = new System.Windows.Forms.TextBox();
             this.cboSwitchTable = new System.Windows.Forms.ComboBox();
             this.btnSwitchTable = new System.Windows.Forms.Button();
             this.nmDiscount = new System.Windows.Forms.NumericUpDown();
@@ -47,11 +52,6 @@
             this.cboFood = new System.Windows.Forms.ComboBox();
             this.cboCategory = new System.Windows.Forms.ComboBox();
             this.flpTable = new System.Windows.Forms.FlowLayoutPanel();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.txtToalPrice = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -125,6 +125,26 @@
             this.lsvBill.UseCompatibleStateImageBehavior = false;
             this.lsvBill.View = System.Windows.Forms.View.Details;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Tên món";
+            this.columnHeader1.Width = 204;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Số lượng";
+            this.columnHeader2.Width = 51;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Đơn giá";
+            this.columnHeader3.Width = 50;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Thành tiền";
+            this.columnHeader4.Width = 71;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.txtToalPrice);
@@ -137,6 +157,17 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(386, 52);
             this.panel3.TabIndex = 3;
+            // 
+            // txtToalPrice
+            // 
+            this.txtToalPrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.txtToalPrice.Location = new System.Drawing.Point(189, 16);
+            this.txtToalPrice.Name = "txtToalPrice";
+            this.txtToalPrice.ReadOnly = true;
+            this.txtToalPrice.Size = new System.Drawing.Size(98, 20);
+            this.txtToalPrice.TabIndex = 11;
+            this.txtToalPrice.Text = "0";
+            this.txtToalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // cboSwitchTable
             // 
@@ -201,6 +232,7 @@
             this.btnAddFood.TabIndex = 4;
             this.btnAddFood.Text = "Thêm món";
             this.btnAddFood.UseVisualStyleBackColor = true;
+            this.btnAddFood.Click += new System.EventHandler(this.BtnAddFood_Click);
             // 
             // nmFoodCount
             // 
@@ -234,6 +266,7 @@
             this.cboCategory.Name = "cboCategory";
             this.cboCategory.Size = new System.Drawing.Size(242, 21);
             this.cboCategory.TabIndex = 0;
+            this.cboCategory.SelectedIndexChanged += new System.EventHandler(this.CboCategory_SelectedIndexChanged);
             // 
             // flpTable
             // 
@@ -242,37 +275,6 @@
             this.flpTable.Name = "flpTable";
             this.flpTable.Size = new System.Drawing.Size(542, 533);
             this.flpTable.TabIndex = 5;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Tên món";
-            this.columnHeader1.Width = 204;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Số lượng";
-            this.columnHeader2.Width = 51;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Đơn giá";
-            this.columnHeader3.Width = 50;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Thành tiền";
-            this.columnHeader4.Width = 71;
-            // 
-            // txtToalPrice
-            // 
-            this.txtToalPrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.txtToalPrice.Location = new System.Drawing.Point(189, 16);
-            this.txtToalPrice.Name = "txtToalPrice";
-            this.txtToalPrice.ReadOnly = true;
-            this.txtToalPrice.Size = new System.Drawing.Size(98, 20);
-            this.txtToalPrice.TabIndex = 11;
-            this.txtToalPrice.Text = "0";
-            this.txtToalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmTableManager
             // 

@@ -21,11 +21,26 @@ namespace quanLyQuanCafeFinal
         {
             InitializeComponent();
             loadTableList();
+            loadCategory();
         }
 
 
 
         #region methods
+        void loadCategory()
+        {
+            List<Category> lstCategory = CategoryDAO.Instance.getListCategory();
+            cboCategory.DataSource = lstCategory;
+            cboCategory.DisplayMember = "name";
+        }
+
+        void loadFoodListByCategoryId(int id)
+        {
+            List<Food> lstFood = FoodDAO.Instance.getFoodListByCategoryId(id);
+            cboFood.DataSource = lstFood;
+            cboFood.DisplayMember = "Name";
+        }
+
         void loadTableList()
         {
             List<Table> tablelst = TableDAO.Instance.loadTableList();
@@ -67,6 +82,7 @@ namespace quanLyQuanCafeFinal
 
                 lsvBill.Items.Add(lstvItem);
             }
+            //Đổi trạng thái về Việt Nam
             CultureInfo culture = new CultureInfo("vi-VN");
 
             txtToalPrice.Text = totalPrice.ToString("c", culture);//Chữ c là định dạng tiền bạc
@@ -80,6 +96,7 @@ namespace quanLyQuanCafeFinal
         private void btn_Click(object sender, EventArgs e)
         {
             int tableId = ((sender as Button).Tag as Table).ID;
+            lsvBill.Tag = (sender as Button).Tag;
             ShowBill(tableId);
 
         }
@@ -92,6 +109,7 @@ namespace quanLyQuanCafeFinal
         private void ThôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAccountProfile f = new frmAccountProfile();
+            lsvBill.Tag = (sender as Button).Tag;
             f.ShowDialog();
         }
 
@@ -100,6 +118,46 @@ namespace quanLyQuanCafeFinal
             frmAdmin f = new frmAdmin();
             f.ShowDialog();
         }
+
+        private void CboCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int id = 0;
+            ComboBox combo = sender as ComboBox;
+
+            //Kiểm tra nếu combobox của Category mà trống thì sẽ k thực hiện clg
+            if (combo.SelectedItem == null)
+            {
+                return;
+            }
+
+            Category selected = combo.SelectedItem as Category;
+            id = selected.ID;
+            loadFoodListByCategoryId(id);
+
+        }
+
+        private void BtnAddFood_Click(object sender, EventArgs e)
+        {
+            //Lấy ra cái đối tượng table hiện tại
+            Table table = lsvBill.Tag as Table;
+
+            int idBill = BillDAO.Instance.getUnCheckedBillIdByTableId(table.ID);        //Lấy IdBill của cái bàn hiện tại
+            int idFood = (cboFood.SelectedItem as Food).ID;
+            int count = (int)nmFoodCount.Value;
+
+            //Nếu IDBill = -1: không có Bill nào đang tồn tại thì phải thêm Bill mới
+            if(idBill == -1)
+            {
+                BillDAO.Instance.InsertBill(table.ID);
+                BillInfoDAO.Instance.insertBillInfo(BillDAO.Instance.getMaxIDBill(), idFood, count); 
+            }
+            else //khi Bill đã tồn tại
+            {
+                BillInfoDAO.Instance.insertBillInfo(idBill, idFood, count);
+            }
+            ShowBill(table.ID);
+        }
+
         #endregion
     }
 }

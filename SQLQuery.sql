@@ -236,3 +236,61 @@ where bi.idBill = b.id and bi.idFood = f.id and b.idTable = 5 and b.status = 0
 select * from billInfo 
 select * from bill
 select * from tableFood
+go
+
+--Bài 11: Thêm bớt món ăn
+
+create proc usp_insertBill
+@idTable int
+as
+begin
+	insert into Bill
+	(dateCheckIn, dateCheckOut, idTable, status	)
+	values
+	(
+		GETDATE(),
+		Null,
+		@idTable,
+		0
+	)
+end
+go
+
+alter proc usp_insertBillInfo
+@idBill INT ,
+@idFood int ,
+@count int
+as
+begin
+	declare @isExistBillInfo int;
+	declare @foodCount int = 1;
+
+	select @isExistBillInfo = id , @foodCount = b.count 
+	from dbo.billInfo as b
+	where idBill = @idBill and idFood = @idFood
+	
+	--Nếu đã tồn tại BillInfo này rồi thì cập nhật nó
+	if(@isExistBillInfo > 0)
+	begin
+		declare @newCount int = @foodCount + @count;
+		if(@newCount>0)
+			update billInfo set count = @count + @foodCount where idFood = @idFood
+		else
+			Delete dbo.billInfo where idBill = @idBill and idFood = @idFood
+	end
+	else	--Nếu chưa tồn tại BillInfo thì tạo mới bằng cách insert
+	begin
+		insert into billInfo( idBill , idFood , count)
+		values
+		(
+			@idBill ,
+			@idFood ,
+			@count
+		)
+	end
+
+	
+end
+go
+
+select Max(id) from bill
