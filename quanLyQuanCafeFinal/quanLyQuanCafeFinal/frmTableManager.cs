@@ -43,6 +43,8 @@ namespace quanLyQuanCafeFinal
 
         void loadTableList()
         {
+            flpTable.Controls.Clear();
+
             List<Table> tablelst = TableDAO.Instance.loadTableList();
 
             foreach(Table table in tablelst)
@@ -86,6 +88,7 @@ namespace quanLyQuanCafeFinal
             CultureInfo culture = new CultureInfo("vi-VN");
 
             txtToalPrice.Text = totalPrice.ToString("c", culture);//Chữ c là định dạng tiền bạc
+
         }
         #endregion
 
@@ -156,8 +159,32 @@ namespace quanLyQuanCafeFinal
                 BillInfoDAO.Instance.insertBillInfo(idBill, idFood, count);
             }
             ShowBill(table.ID);
+
+            loadTableList();
         }
 
+        private void BtnCheckOut_Click(object sender, EventArgs e)
+        {
+            Table table = lsvBill.Tag as Table;
+
+            int idBill = BillDAO.Instance.getUnCheckedBillIdByTableId(table.ID);
+
+            if(idBill != -1)
+            {
+                if (MessageBox.Show("Bạn có chắc thanh toán hóa đơn cho bàn + " + table.Name  , "thông báo!", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                {
+                    BillDAO.Instance.CheckOut(idBill);
+                    ShowBill(table.ID);
+
+                    loadTableList();
+                }
+            }
+        }
+
+
+
         #endregion
+
+
     }
 }

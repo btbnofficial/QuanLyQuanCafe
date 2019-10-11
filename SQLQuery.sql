@@ -294,3 +294,50 @@ end
 go
 
 select Max(id) from bill
+
+--Bài 12: Thanh toán hóa đơn
+update dbo.bill set status = 1 where id = 1
+go
+
+
+--Trigger mỗi khi thêm hoặc cập nhật hóa đơn
+create trigger UTG_UpdateBillInfo
+ON dbo.BillInfo for insert, update
+as
+begin
+	declare @idBill int
+
+	select @idBill = idBill from inserted
+
+	declare @idTable int
+
+	Select @idTable = idTable from dbo.bill where id = @idBill and status = 0 --nếu chưa checkOut
+
+	update dbo.tableFood set status = N'Có người' where id = @idTable
+end
+go
+
+alter TRigger UTG_UpdateBill
+on dbo.Bill for update
+as
+begin
+	declare @idBill int
+
+	select @idBill = id from inserted
+
+	declare @idTable int
+
+	Select @idTable = idTable from dbo.bill where id = @idBill
+
+	declare @count int = 0
+
+	select @count = Count(*) from Bill where idTable = @idTable and status = 0
+
+	if(@count = 0)
+		update tableFood set status = N'Trống' where id = @idTable
+
+end
+go
+
+delete billInfo
+delete Bill

@@ -203,6 +203,7 @@
             this.btnCheckOut.TabIndex = 8;
             this.btnCheckOut.Text = "Thanh toán";
             this.btnCheckOut.UseVisualStyleBackColor = false;
+            this.btnCheckOut.Click += new System.EventHandler(this.BtnCheckOut_Click);
             // 
             // btnDiscount
             // 
