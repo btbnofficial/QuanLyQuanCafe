@@ -240,21 +240,22 @@ go
 
 --Bài 11: Thêm bớt món ăn
 
-create proc usp_insertBill
+alter proc usp_insertBill
 @idTable int
 as
 begin
 	insert into Bill
-	(dateCheckIn, dateCheckOut, idTable, status	)
+	(dateCheckIn, dateCheckOut, idTable, status, discount)
 	values
 	(
 		GETDATE(),
 		Null,
 		@idTable,
+		0,
 		0
 	)
 end
-go
+go 
 
 alter proc usp_insertBillInfo
 @idBill INT ,
@@ -301,7 +302,7 @@ go
 
 
 --Trigger mỗi khi thêm hoặc cập nhật hóa đơn
-create trigger UTG_UpdateBillInfo
+alter trigger UTG_UpdateBillInfo
 ON dbo.BillInfo for insert, update
 as
 begin
@@ -313,9 +314,27 @@ begin
 
 	Select @idTable = idTable from dbo.bill where id = @idBill and status = 0 --nếu chưa checkOut
 
-	update dbo.tableFood set status = N'Có người' where id = @idTable
+	declare @count int
+	select @count = COUNT(*) from billInfo where idBill = @idBill
+
+	if(@count > 0)
+	begin
+		print @idTable
+		print @idBill
+		print @count
+		update dbo.tableFood set status = N'Có người' where id = @idTable
+	end
+	else 
+	begin
+		print @idTable
+		print @idBill
+		print @count
+		update dbo.tableFood set status = N'Trống' where id = @idTable
+	end
+
 end
 go
+
 
 alter TRigger UTG_UpdateBill
 on dbo.Bill for update
@@ -341,3 +360,91 @@ go
 
 delete billInfo
 delete Bill
+
+												--Bài 13: Chuyển bàn
+alter table Bill
+add Discount int 
+
+
+update Bill set discount = 0
+go
+
+alter proc usp_SwitchTable
+@idTable1 int , @idTable2 int
+as
+begin
+	declare @idFirstBill int
+	declare @idSecondBill int
+
+	declare @isFirstTableEmpty int = 1
+	declare @isSecondTableEmpty int = 1
+
+	Select @idSecondBill = id from bill where idTable = @idTable2 and status = 0
+	Select @idFirstBill = id from bill where idTable = @idTable1 and status = 0
+
+	print @idFirstBill
+	print @idSecondBill
+	print '--------------'
+
+	if(@idFirstBill is null)
+	begin
+		print '000000000002'
+		insert into Bill(dateCheckIn , dateCheckOut , idTable , status)
+		values(
+		GETDATE() ,
+		null ,
+		@idTable1 ,
+		0
+		)
+
+		select @idFirstBill = max(id) from bill where idTable = @idTable1 and status = 0
+		
+	end
+
+	select @isFirstTableEmpty = count(*) from dbo.BillInfo  where idBill = @idFirstBill
+
+	print @idFirstBill
+	print @idSecondBill
+	print '--------------'
+
+	if(@idSecondBill is null)
+	begin  
+		print '000000000001'
+		insert into Bill(dateCheckIn , dateCheckOut , idTable , status)
+		values(
+		GETDATE() ,
+		null ,
+		@idTable2 ,
+		0
+		)
+
+		select @idSecondBill = max(id) from bill where idTable = @idTable2 and status = 0
+
+	end
+
+	select @isSecondTableEmpty = count(*) from billInfo where idBill = @idSecondBill
+
+	print @idFirstBill
+	print @idSecondBill
+	print '--------------'
+
+	select id into IdBillInfoTable from dbo.billInfo where idBill = @idSecondBill
+
+	update billInfo set idBill = @idSecondBill where idBill = @idFirstBill
+
+	update billInfo set idBill = @idFirstBill where id in (select * from IdBillInfoTable)
+
+	Drop table IdBillInfoTable
+
+	if(@isFirstTableEmpty = 0)
+		update tableFood set status = N'Trống' where id = @idTable2
+	if(@isSecondTableEmpty = 0)
+		update tableFood set status = N'Trống' where id = @idTable1
+end
+go
+
+exec dbo.usp_SwitchTable @idTable1 = 4 , @idTable2 = 8
+
+select * from tableFood
+
+update tableFood set status = N'Trống'

@@ -185,6 +185,7 @@
             this.btnSwitchTable.TabIndex = 10;
             this.btnSwitchTable.Text = "Chuyển bàn";
             this.btnSwitchTable.UseVisualStyleBackColor = true;
+            this.btnSwitchTable.Click += new System.EventHandler(this.BtnSwitchTable_Click);
             // 
             // nmDiscount
             // 

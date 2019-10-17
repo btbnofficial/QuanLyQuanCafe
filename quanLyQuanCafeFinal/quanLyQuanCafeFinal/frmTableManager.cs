@@ -22,6 +22,7 @@ namespace quanLyQuanCafeFinal
             InitializeComponent();
             loadTableList();
             loadCategory();
+            loadComboboxTable(cboSwitchTable);
         }
 
 
@@ -85,11 +86,20 @@ namespace quanLyQuanCafeFinal
                 lsvBill.Items.Add(lstvItem);
             }
             //Đổi trạng thái về Việt Nam
-            CultureInfo culture = new CultureInfo("vi-VN");
+            //CultureInfo culture = new CultureInfo("vi-VN");
 
-            txtToalPrice.Text = totalPrice.ToString("c", culture);//Chữ c là định dạng tiền bạc
-
+            //txtToalPrice.Text = totalPrice.ToString("c", culture);//Chữ c là định dạng tiền bạc
+            txtToalPrice.Text = totalPrice.ToString();
         }
+        
+        void loadComboboxTable(ComboBox cb)
+        {
+            cb.DataSource = TableDAO.Instance.loadTableList();
+            cb.DisplayMember = "Name";
+        }
+        
+        
+        
         #endregion
 
 
@@ -168,12 +178,15 @@ namespace quanLyQuanCafeFinal
             Table table = lsvBill.Tag as Table;
 
             int idBill = BillDAO.Instance.getUnCheckedBillIdByTableId(table.ID);
+            int discount = (int)nmDiscount.Value;
+            double totalPrice = Convert.ToDouble(txtToalPrice.Text.Split(',')[0]);
+            double finalTotalPrice = totalPrice - (totalPrice / 100) * discount;
 
             if(idBill != -1)
             {
-                if (MessageBox.Show("Bạn có chắc thanh toán hóa đơn cho bàn + " + table.Name  , "thông báo!", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                if (MessageBox.Show(string.Format("Bạn có chắc thanh toán hóa đơn cho bàn {0}\nTổng tiền - (Tổng tiền / 100) x Giảm giá \n=> {1} - {1}/100 x {2} = {3}" ,table.Name , totalPrice , discount , finalTotalPrice  ), "thông báo!", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
-                    BillDAO.Instance.CheckOut(idBill);
+                    BillDAO.Instance.CheckOut(idBill,discount);
                     ShowBill(table.ID);
 
                     loadTableList();
@@ -181,10 +194,21 @@ namespace quanLyQuanCafeFinal
             }
         }
 
+        private void BtnSwitchTable_Click(object sender, EventArgs e)
+        {
+            int id1 = (lsvBill.Tag as Table).ID;
+            int id2 = (cboSwitchTable.SelectedItem as Table).ID;
+            if (MessageBox.Show(String.Format("Ban co that su muon chuyen ban {0} qua ban {1} ", (lsvBill.Tag as Table).Name, (cboSwitchTable.SelectedItem as Table).Name),"Thong bao!", MessageBoxButtons.OKCancel)== System.Windows.Forms.DialogResult.OK)
+            {
+                TableDAO.Instance.SwitchTable(id1, id2);
+
+                loadTableList();
+            }
+        }
 
 
         #endregion
 
-
+        
     }
 }
