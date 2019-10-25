@@ -17,17 +17,49 @@ namespace quanLyQuanCafeFinal
 {
     public partial class frmTableManager : Form
     {
-        public frmTableManager()
+
+        private Account logInAccount;
+
+        public Account LogInAccount
+        {
+            get
+            {
+                return logInAccount;
+            }
+            set
+            {
+                logInAccount = value;
+                //ChangeAccount(accLoz.Type);
+            }
+        }
+
+        public frmTableManager(Account acc)
         {
             InitializeComponent();
+
+            this.LogInAccount = acc;
+            ChangeAccount(acc.Type);
+
             loadTableList();
             loadCategory();
             loadComboboxTable(cboSwitchTable);
+            Account fuck = new Account(acc.Username,acc.DisplayName,acc.Type,acc.Password);
         }
 
 
 
         #region methods
+
+        /// <summary>
+        /// Phân quyền acc, loại 1 thì là admin còn loại 0 thì là staff
+        /// </summary>
+        /// <param name="type"></param>
+        void ChangeAccount(int type)
+        {
+            adminTSMI.Enabled = type == 1;
+            thôngTinTàiKhoảnToolStripMenuItem.Text += "  (" + LogInAccount.DisplayName + " )";
+        }
+
         void loadCategory()
         {
             List<Category> lstCategory = CategoryDAO.Instance.getListCategory();
@@ -121,9 +153,14 @@ namespace quanLyQuanCafeFinal
 
         private void ThôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAccountProfile f = new frmAccountProfile();
-            lsvBill.Tag = (sender as Button).Tag;
+            frmAccountProfile f = new frmAccountProfile(LogInAccount);
+            f.UpdateAccount += f_UpdateAccount;
             f.ShowDialog();
+        }
+
+        private void f_UpdateAccount(object sender, frmAccountProfile.AccountEvent e)
+        {
+            thôngTinTàiKhoảnToolStripMenuItem.Text = "Thông tin tài khoản (" + e.Acc.DisplayName + " )";
         }
 
         private void AdminToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,7 +223,7 @@ namespace quanLyQuanCafeFinal
             {
                 if (MessageBox.Show(string.Format("Bạn có chắc thanh toán hóa đơn cho bàn {0}\nTổng tiền - (Tổng tiền / 100) x Giảm giá \n=> {1} - {1}/100 x {2} = {3}" ,table.Name , totalPrice , discount , finalTotalPrice  ), "thông báo!", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
-                    BillDAO.Instance.CheckOut(idBill,discount);
+                    BillDAO.Instance.CheckOut(idBill,discount,(float)finalTotalPrice);
                     ShowBill(table.ID);
 
                     loadTableList();

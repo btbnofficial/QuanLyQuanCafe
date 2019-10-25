@@ -1,4 +1,5 @@
 ﻿using quanLyQuanCafeFinal.DAO;
+using quanLyQuanCafeFinal.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,8 @@ namespace quanLyQuanCafeFinal
             String password = txtPassword.Text;
             if(logIn(username,password))
             {
-                frmTableManager f = new frmTableManager();
+                Account accLoz = AccountDAO.Instance.GetAccountByUserNamePassword(username, password);
+                frmTableManager f = new frmTableManager(accLoz);
                 this.Hide();
                 f.ShowDialog();     //show dialog là top mode, chỉ thực hiện được các thao tác trên form đó
                 this.Show();

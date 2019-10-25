@@ -448,3 +448,57 @@ exec dbo.usp_SwitchTable @idTable1 = 4 , @idTable2 = 8
 select * from tableFood
 
 update tableFood set status = N'Trống'
+
+--Bài 14: HIển thị danh sách hóa đơn
+select * from bill
+select * from billInfo
+
+delete billInfo
+
+update tableFood set status = N'Trống'
+
+	
+	--thêm một cột tổng tiền cho bảng Bill
+alter table Bill add totalPrice Float 
+
+alter proc ups_getListBillByDate
+@checkIn Date, @checkOut date
+as
+begin
+	select tableFood.name as [Tên bàn] , bill.totalPrice as [Tổng giá], Bill.dateCheckIn as [Ngày vào], Bill.dateCheckOut as [Ngày ra], Bill.Discount as [Giảm giá] 
+	from Bill, tableFood
+	where dateCheckIn >= @checkIn and dateCheckOut <= @checkOut and Bill.status = 1
+	and tableFood.id = Bill.idTable 
+end
+go
+
+--Bài 15: Thay đổi thông tin cá nhân
+select * from account
+insert account
+values (N'Fuck', N'dep trai va tot', N'2', 0)
+go
+
+create proc usp_updateAccount
+@username nvarchar(100),
+@displayName nvarchar(100),
+@password nvarchar(100),
+@newPassword nvarchar(100)
+as
+begin
+	declare @isRightPass int
+	select @isRightPass = count(*) from account where username = @username and password = @password
+
+	if(@isRightPass >= 1 )
+	begin
+		--Nếu mật khẩu mới là khoảng trống thì không cập nhật mật khẩu
+		if(@newPassword = null or @newPassword = N'')
+		begin
+			update account set displayName = @displayName where username = @username
+		end
+		else
+		begin
+			update account set displayName = @displayName, password = @password where username = @username
+		end
+	end
+end
+go

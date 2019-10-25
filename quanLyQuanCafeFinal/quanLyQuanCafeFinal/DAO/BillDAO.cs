@@ -65,10 +65,21 @@ namespace quanLyQuanCafeFinal.DAO
             }
         }
 
-        public void CheckOut(int id, int discount)
+        /// <summary>
+        /// Khi thanh toán những mục dưới đây sẽ được cập nhật!
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="discount"></param>
+        public void CheckOut(int id, int discount, float totalPrice)
         {
-            String query = "update dbo.bill set status = 1 , " + " discount = " + discount + " where id = " +id;
+            String query = "update dbo.bill set dateCheckOut = GetDate() , status = 1 , " + " discount = " +  discount + " , totalPrice = "+totalPrice +" where id = " +id;
             DataProvider.Instance.ExcecuteNonQuery(query);
+        }
+
+        public DataTable getBillListByDate(DateTime CheckIn, DateTime CheckOut)
+        {
+            return DataProvider.Instance.ExcecuteQuery("excute ups_getListBillByDate @checkIn , @checkOut", new object[] {CheckIn , CheckOut });
+            //return DataProvider.Instance.ExcecuteQuery("select tableFood.name , bill.totalPrice , Bill.dateCheckIn , Bill.dateCheckOut , Bill.Discount from Bill, tableFood where tableFood.id = Bill.idTable ");
         }
     }
 }
