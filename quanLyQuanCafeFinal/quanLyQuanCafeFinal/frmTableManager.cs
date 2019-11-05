@@ -166,7 +166,32 @@ namespace quanLyQuanCafeFinal
         private void AdminToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAdmin f = new frmAdmin();
+            f.InsertFood += F_InsertFood;
+            f.DeleteFood += F_DeleteFood;
+            f.UpdateFood += F_UpdateFood;
             f.ShowDialog();
+        }
+
+        private void F_UpdateFood(object sender, EventArgs e)
+        {
+            loadFoodListByCategoryId((cboCategory.SelectedItem as Category).ID);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).ID);
+        }
+
+        private void F_DeleteFood(object sender, EventArgs e)
+        {
+            loadFoodListByCategoryId((cboCategory.SelectedItem as Category).ID);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).ID);
+            loadTableList();
+        }
+
+        private void F_InsertFood(object sender, EventArgs e)
+        {
+            loadFoodListByCategoryId((cboCategory.SelectedItem as Category).ID);
+            if(lsvBill.Tag!=null)
+                ShowBill((lsvBill.Tag as Table).ID);
         }
 
         private void CboCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -190,6 +215,12 @@ namespace quanLyQuanCafeFinal
         {
             //Lấy ra cái đối tượng table hiện tại
             Table table = lsvBill.Tag as Table;
+
+            if(table == null)
+            {
+                MessageBox.Show("Hay chon ban!");
+                return;
+            }
 
             int idBill = BillDAO.Instance.getUnCheckedBillIdByTableId(table.ID);        //Lấy IdBill của cái bàn hiện tại
             int idFood = (cboFood.SelectedItem as Food).ID;

@@ -45,7 +45,7 @@
             this.cboFoodCategory = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtFoodName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.txtFoodId = new System.Windows.Forms.TextBox();
@@ -316,19 +316,19 @@
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.textBox1);
+            this.panel8.Controls.Add(this.txtFoodName);
             this.panel8.Controls.Add(this.label2);
             this.panel8.Location = new System.Drawing.Point(3, 58);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(357, 48);
             this.panel8.TabIndex = 2;
             // 
-            // textBox1
+            // txtFoodName
             // 
-            this.textBox1.Location = new System.Drawing.Point(125, 15);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(221, 20);
-            this.textBox1.TabIndex = 1;
+            this.txtFoodName.Location = new System.Drawing.Point(125, 15);
+            this.txtFoodName.Name = "txtFoodName";
+            this.txtFoodName.Size = new System.Drawing.Size(221, 20);
+            this.txtFoodName.TabIndex = 1;
             // 
             // label2
             // 
@@ -355,6 +355,7 @@
             this.txtFoodId.ReadOnly = true;
             this.txtFoodId.Size = new System.Drawing.Size(221, 20);
             this.txtFoodId.TabIndex = 1;
+            this.txtFoodId.TextChanged += new System.EventHandler(this.TxtFoodId_TextChanged);
             // 
             // label1
             // 
@@ -425,6 +426,7 @@
             this.btnShowFood.TabIndex = 3;
             this.btnShowFood.Text = "Xem";
             this.btnShowFood.UseVisualStyleBackColor = true;
+            this.btnShowFood.Click += new System.EventHandler(this.BtnShowFood_Click);
             // 
             // btnEditFood
             // 
@@ -434,6 +436,7 @@
             this.btnEditFood.TabIndex = 2;
             this.btnEditFood.Text = "Sửa";
             this.btnEditFood.UseVisualStyleBackColor = true;
+            this.btnEditFood.Click += new System.EventHandler(this.BtnEditFood_Click);
             // 
             // btnDeleteFood
             // 
@@ -443,6 +446,7 @@
             this.btnDeleteFood.TabIndex = 1;
             this.btnDeleteFood.Text = "Xóa";
             this.btnDeleteFood.UseVisualStyleBackColor = true;
+            this.btnDeleteFood.Click += new System.EventHandler(this.BtnDeleteFood_Click);
             // 
             // btnAddFood
             // 
@@ -452,6 +456,7 @@
             this.btnAddFood.TabIndex = 0;
             this.btnAddFood.Text = "Thêm";
             this.btnAddFood.UseVisualStyleBackColor = true;
+            this.btnAddFood.Click += new System.EventHandler(this.BtnAddFood_Click);
             // 
             // tpCategory
             // 
@@ -1012,7 +1017,7 @@
         private System.Windows.Forms.ComboBox cboFoodCategory;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtFoodName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.TextBox txtFoodId;

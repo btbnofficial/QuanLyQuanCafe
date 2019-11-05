@@ -43,6 +43,47 @@ namespace quanLyQuanCafeFinal.DAO
 
             return lstFood;
         }
+
+        public List<Food> getFoodList()
+        {
+            List<Food> lstFood = new List<Food>();
+
+            String query = "select * from food";
+
+            DataTable data = DataProvider.Instance.ExcecuteQuery(query);
+
+            foreach (DataRow item in data.Rows)
+            {
+                Food f = new Food(item);
+                lstFood.Add(f);
+            }
+
+            return lstFood;
+        }
+
+        public bool insertFood(String name, int idCategory, float price)
+        {
+            String query = String.Format("insert dbo.food ( Name, idCategory , price ) values (N'{0}', {1}, {2})", name, idCategory, price);
+            int result = DataProvider.Instance.ExcecuteNonQuery(query);
+
+            return result > 0;
+        }
+
+        public bool updateFood(String name, int idCategory, float price, int id)
+        {
+            String query = String.Format("update Food set name = N'{0}', idCategory = {1}, price = {2} where id = {3}", name, idCategory, price,id);
+            int result = DataProvider.Instance.ExcecuteNonQuery(query);
+
+            return result > 0;
+        }
+
+        public bool deleteFood(int id)
+        {
+            BillInfoDAO.Instance.deleteBillInfoByFoodId(id);
+            int result = DataProvider.Instance.ExcecuteNonQuery("Delete Food where id = " + id);
+
+            return result > 0;
+        }
     }
 
 }

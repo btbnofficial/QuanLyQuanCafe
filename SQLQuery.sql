@@ -502,3 +502,39 @@ begin
 	end
 end
 go
+
+-- Bài 16: Hiển thị danh sách thức ăn
+--Bài 17: Binding thông tin thức ăn
+
+select * from food
+insert dbo.Food(Name, idCategory, price)
+values
+(
+	N'loz',
+	5,
+	666
+)
+
+delete food
+
+select * from food
+go
+
+alter Trigger utg_deleteBillInfo
+on BillInfo for delete
+as
+begin
+	declare @idBillInfo int
+	declare @idBill int
+
+	select @idBillInfo = id , @idBill = deleted.idBill from deleted
+
+	declare @idTable int
+	select @idTable = idTable from Bill where id = @idBill
+
+	declare @count int = 0
+	select @count = count(*) from billInfo as bi, bill as b where b.id = bi.idBill and b.id = @idBill and b.status = 0
+
+	if(@count = 0)
+		update tableFood set status = N'Trống' where id = @idTable
+end
