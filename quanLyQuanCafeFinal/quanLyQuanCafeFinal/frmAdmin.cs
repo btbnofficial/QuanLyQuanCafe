@@ -70,6 +70,16 @@ namespace quanLyQuanCafeFinal
             cb.DisplayMember = "Name";
         }
 
+        List<Food> searchFoodByName(String name)
+        {
+            List<Food> lstFood = new List<Food>();
+
+            lstFood = FoodDAO.Instance.searchFoodByName(name);
+
+            return lstFood;
+        }
+
+
         #endregion
 
 
@@ -87,28 +97,33 @@ namespace quanLyQuanCafeFinal
 
         private void TxtFoodId_TextChanged(object sender, EventArgs e)
         {
-            if(dtgvFood.SelectedCells.Count>0)
+            try
             {
-                int id = (int)dtgvFood.SelectedCells[0].OwningRow.Cells["IdCategory"].Value;
-                
-                Category category = CategoryDAO.Instance.GetCategoyById(id);
-
-                cboFoodCategory.SelectedItem = category;
-
-                int index = -1;
-                int i = 0;
-                foreach (Category item in cboFoodCategory.Items)
+                if(dtgvFood.SelectedCells.Count>0)
                 {
-                    if(item.ID == category.ID)
-                    {
-                        index = i;
-                        break;
-                    }
-                    i++;
-                }
+                    int id = (int)dtgvFood.SelectedCells[0].OwningRow.Cells["IdCategory"].Value;
+                
+                    Category category = CategoryDAO.Instance.GetCategoyById(id);
 
-                cboFoodCategory.SelectedIndex = index;
+                    cboFoodCategory.SelectedItem = category;
+
+                    int index = -1;
+                    int i = 0;
+                    foreach (Category item in cboFoodCategory.Items)
+                    {
+                        if(item.ID == category.ID)
+                        {
+                            index = i;
+                            break;
+                        }
+                        i++;
+                    }
+
+                    cboFoodCategory.SelectedIndex = index;
+                }
             }
+            catch
+            { }
         }
         private void BtnAddFood_Click(object sender, EventArgs e)
         {
@@ -191,6 +206,11 @@ namespace quanLyQuanCafeFinal
         {
             add { updateFood += value; }
             remove { updateFood -= value; }
+        }
+
+        private void BtnSearchFood_Click(object sender, EventArgs e)
+        {
+            foodList.DataSource = searchFoodByName(txtSearchFoodName.Text);
         }
 
 
