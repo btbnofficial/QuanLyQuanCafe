@@ -17,6 +17,10 @@ namespace quanLyQuanCafeFinal
     {
         BindingSource foodList = new BindingSource();
 
+        BindingSource accountList = new BindingSource();
+
+        public Account loginAccount;
+
         public frmAdmin()
         {
             InitializeComponent();
@@ -28,12 +32,16 @@ namespace quanLyQuanCafeFinal
         void load()
         {
             dtgvFood.DataSource = foodList;
+            dtgvAccount.DataSource = accountList;
 
             loadDateTimePickerBill();
             loadFoodList();
+            loadAccount();
             //loadListBillByDate(dtpFromDate.Value, dtpToDate.Value);
             AddFoodBinding();
             loadFoodCategoryIntoCombobox(cboFoodCategory);
+            addAccountBinding();
+
         }
 
         void loadListBillByDate(DateTime checkIn, DateTime checkOut)
@@ -79,6 +87,78 @@ namespace quanLyQuanCafeFinal
             return lstFood;
         }
 
+        void addAccountBinding()
+        {
+            //true, DataSourceUpdateMode.Never để nó không chuyển đổi dữ liệu ngược từ bên textbox sang datagridview 
+            txtUserName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "Username", true, DataSourceUpdateMode.Never));
+            txtDisplayName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
+            nmAccountType.DataBindings.Add(new Binding("Value", dtgvAccount.DataSource, "Type", true, DataSourceUpdateMode.Never));
+        }
+
+        void loadAccount()
+        {
+            accountList.DataSource = AccountDAO.Instance.getListAccount();
+        }
+
+        void addAccount(String username, String displayname, int type)
+        {
+            if (AccountDAO.Instance.insertAccount(username, displayname, type))
+            {
+                MessageBox.Show("Them tai khoan thanh cong!", "thong bao");
+                loadAccount();/*
+                if (insertFood != null)
+                {
+                    insertFood(this, new EventArgs());
+                }*/
+            }
+            else
+            {
+                MessageBox.Show("Co loi khi them tai khoan!", "Thong bao");
+            }
+        }
+
+        void EditAccount(String username, String displayname, int type)
+        {
+            if (AccountDAO.Instance.EditAccount(username, displayname, type))
+            {
+                MessageBox.Show("Sửa khoản thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Sửa tài khoản thất bại!");
+            }
+        }
+
+        void deleteAccount(String username)
+        {
+            if(loginAccount.Username.Equals(username))
+            {
+                MessageBox.Show("Tài khoản hiện đang kết nối!");
+                return;
+            }
+            if(AccountDAO.Instance.deleteAccount(username))
+            {
+                MessageBox.Show("Xóa tài khoản thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Xóa tài khoản thất bại!");
+            }
+        }
+
+        void resetPass()
+        {
+            String username = txtUserName.Text;
+
+            if (AccountDAO.Instance.resetPassword(username))
+            {
+                MessageBox.Show("Đặt lại mật khẩu thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Đặt lại mật khẩu thất bại!");
+            }
+        }
 
         #endregion
 
@@ -89,12 +169,10 @@ namespace quanLyQuanCafeFinal
         {
             loadListBillByDate(dtpFromDate.Value, dtpToDate.Value);
         }
-
         private void BtnShowFood_Click(object sender, EventArgs e)
         {
             loadFoodList();
         }
-
         private void TxtFoodId_TextChanged(object sender, EventArgs e)
         {
             try
@@ -145,7 +223,6 @@ namespace quanLyQuanCafeFinal
                 MessageBox.Show("Co loi khi them thuc an!", "Thong bao");
             }
         }
-
         private void BtnEditFood_Click(object sender, EventArgs e)
         {
             String name = txtFoodName.Text;
@@ -167,7 +244,6 @@ namespace quanLyQuanCafeFinal
                 MessageBox.Show("Co loi khi update thuc an!", "Thong bao");
             }
         }
-
         private void BtnDeleteFood_Click(object sender, EventArgs e)
         {
             int id = int.Parse(txtFoodId.Text);
@@ -207,10 +283,47 @@ namespace quanLyQuanCafeFinal
             add { updateFood += value; }
             remove { updateFood -= value; }
         }
-
         private void BtnSearchFood_Click(object sender, EventArgs e)
         {
             foodList.DataSource = searchFoodByName(txtSearchFoodName.Text);
+        }
+        private void BtnShowAccount_Click(object sender, EventArgs e)
+        {
+            loadAccount();
+        }
+        private void BtnEditAccount_Click(object sender, EventArgs e)
+        {
+            String username = txtUserName.Text;
+            String displayName = txtDisplayName.Text;
+            int type = (int)nmAccountType.Value;
+
+            EditAccount(username, displayName, type);
+            loadAccount();
+
+        }
+
+        private void BtnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            String username = txtUserName.Text;
+            deleteAccount(username);
+            loadAccount();
+
+        }
+
+        private void BtnAddAccount_Click(object sender, EventArgs e)
+        {
+            String username = txtUserName.Text;
+            String displayName = txtDisplayName.Text;
+            int type = (int)nmAccountType.Value;
+
+            addAccount(username, displayName, type);
+            loadAccount();
+
+        }
+
+        private void BtnResetPassword_Click(object sender, EventArgs e)
+        {
+            resetPass();
         }
 
 

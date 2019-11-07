@@ -166,6 +166,7 @@ namespace quanLyQuanCafeFinal
         private void AdminToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAdmin f = new frmAdmin();
+            f.loginAccount = logInAccount;
             f.InsertFood += F_InsertFood;
             f.DeleteFood += F_DeleteFood;
             f.UpdateFood += F_UpdateFood;
